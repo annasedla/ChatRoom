@@ -4,7 +4,12 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 app.get('/', function(req, res){
-  res.sendFile(_dirname + '/index.html');
+  res.sendFile(__dirname + '/index.html');
+});
+
+//connection to socket.io
+io.on('connection', function(socket){
+  console.log('a user connected');
 });
 
 //port to listen on
