@@ -23,19 +23,24 @@
       $('#m').val('');
       return false;
     });
+
+    //chat messages
     socket.on('chat message', function(msg){
       $('#messages').append($('<li>').text(msg));
     });
 
+    //connected messages
     socket.on('connected message', function(){
       $('#messages').append($('<li>').text("User connected."));
     });
 
-     socket.on('disconnected message', function(){
+    //disconnected messages
+    socket.on('disconnected message', function(){
       $('#messages').append($('<li>').text("User disconnected."));
     });
 
   });
+   
 </script>
 <script>
   var socket = io();

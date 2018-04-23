@@ -3,6 +3,9 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+//all chat rooms
+var rooms = {'Default':{'users':[],'log':[]}, 'School':{'users':[],'log':[]}, 'Family':{'users':[],'log':[]}, 'Work':{'users':[],'log':[]}};
+
 app.get('/', function(req, res){
 	res.sendFile(__dirname + '/index.html');
 });
@@ -18,7 +21,7 @@ CONNECTION/ DISCONNECTION
 
 */
 io.on('connection', function(socket){
-	console.log('user connected');
+	console.log('user connected');     //needs to be fixed because currently we are connecting and disconnecting too many times
 	console.log(socket.id);
 	io.emit('connected message');
 	socket.on('disconnect', function(){
