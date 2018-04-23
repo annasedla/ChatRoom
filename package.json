@@ -1,9 +1,23 @@
 {
-  "name": "ChatRoom",
+  "name": "chatroom",
   "version": "0.0.1",
   "description": "not my first socket.io app",
   "dependencies": {
     "socket.io": "latest",
     "express": "^4.16.2"
-  }
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sedlackova-anna/ChatRoom.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sedlackova-anna/ChatRoom/issues"
+  },
+  "homepage": "https://github.com/sedlackova-anna/ChatRoom#readme"
 }
