@@ -4,7 +4,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 //all chat rooms
-var rooms = {'Default':{'users':[],'log':[]}, 'School':{'users':[],'log':[]}, 'Family':{'users':[],'log':[]}, 'Work':{'users':[],'log':[]}};
+var chats = {'Default':{'users':[],'log':[]}, 'School':{'users':[],'log':[]}, 'Family':{'users':[],'log':[]}, 'Work':{'users':[],'log':[]}};
 
 app.get('/', function(req, res){
 	res.sendFile(__dirname + '/index.html');
@@ -38,10 +38,43 @@ SENDING A MESSAGE
 io.on('connection', function(socket){
 	socket.on('chat message', function(msg){
 		io.emit('chat message', msg);
+
+		//add support for multiple chat rooms
 	});
 });
 
 
+/*
+
+DIFFERENT CHAT FUNCTIONS
+
+*/
+function push_to_chat(room, msg){
+  chats[chat].log.push(msg);
+  for(var i=0; i < chats[chat].users.length; i++){
+    chats[chat].users[i].emit(msg.type, msg);
+  }
+}
+
+//updates a list of chats to display in the front end buttons
+function update_chats(usr){
+  var chat_names = [];
+  for(var chat in chats){
+    chat_names.push(chat);
+  }
+  usr.emit('update chats', chat_names);
+}
+
+/*
+
+MULTIPLE CHATS
+
+*/
+
+ io.on('switch room', function(new_room){
+ 	//this will handle switching chat rooms
+
+});
 
 /*
 
@@ -51,8 +84,5 @@ SUPPORT FOR NICKNAMES
 
 
 
-/*
-MULTIPLE CHATS
 
-*/
 
