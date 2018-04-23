@@ -4,26 +4,52 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 app.get('/', function(req, res){
-  res.sendFile(__dirname + '/index.html');
+	res.sendFile(__dirname + '/index.html');
 });
 
-//connection to socket.io
+//port to listen on
+http.listen(3000, function(){
+	console.log('listening on *:3000');
+});
+
+/*
+
+CONNECTION/ DISCONNECTION
+
+*/
 io.on('connection', function(socket){
-  socket.on('disconnect', function(){
-    console.log('user disconnected');
-  });
+	console.log('user connected');
+	console.log(socket.id);
+	io.emit('connected message');
+	socket.on('disconnect', function(){
+		console.log('user disconnected');
+		io.emit('disconnected message');
+	});
 });
 
-//sending a text message
+/*
+
+SENDING A MESSAGE
+
+*/
 io.on('connection', function(socket){
 	socket.on('chat message', function(msg){
 		io.emit('chat message', msg);
 	});
 });
 
-//port to listen on
-http.listen(3000, function(){
-  console.log('listening on *:3000');
-});
 
-//test
+
+/*
+
+SUPPORT FOR NICKNAMES
+
+*/
+
+
+
+/*
+MULTIPLE CHATS
+
+*/
+
