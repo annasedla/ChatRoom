@@ -4,6 +4,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 //all chat rooms
+//al users get initally directed to a lobby
 var chats = {'Default':{'users':[],'log':[]}, 'School':{'users':[],'log':[]}, 'Family':{'users':[],'log':[]}, 'Work':{'users':[],'log':[]}};
 
 app.get('/', function(req, res){
@@ -21,7 +22,7 @@ CONNECTION/ DISCONNECTION
 
 */
 io.on('connection', function(socket){
-	console.log('user connected');     //needs to be fixed because currently we are connecting and disconnecting too many times
+	console.log('user connected');     //TODO, needs to be fixed because currently we are connecting and disconnecting too many times
 	console.log(socket.id);
 	io.emit('connected message');
 	socket.on('disconnect', function(){
@@ -39,7 +40,7 @@ io.on('connection', function(socket){
 	socket.on('chat message', function(msg){
 		io.emit('chat message', msg);
 
-		//add support for multiple chat rooms
+		//TODO, add support for multiple chat rooms
 	});
 });
 
@@ -72,7 +73,7 @@ MULTIPLE CHATS
 */
 
  io.on('switch room', function(new_room){
- 	//this will handle switching chat rooms
+ 	//TODO, this will handle switching chat rooms 
 
 });
 
