@@ -17,11 +17,10 @@ io.on('connection', function(socket){
 
 //sending a text message
 io.on('connection', function(socket){
-	socket.on('chat message', function(msg)){
+	socket.on('chat message', function(msg){
 		io.emit('chat message', msg);
-
-	}
-})
+	});
+});
 
 //port to listen on
 http.listen(3000, function(){
