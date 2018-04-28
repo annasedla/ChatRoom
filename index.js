@@ -23,11 +23,10 @@ CONNECTION/ DISCONNECTION
 */
 io.on('connection', function(socket){
 	console.log('user connected');     //TODO, needs to be fixed because currently we are connecting and disconnecting too many times
-	console.log(socket.id);
-	io.emit('connected message');
+	//io.emit('connected message');
 	socket.on('disconnect', function(){
 		console.log('user disconnected');
-		io.emit('disconnected message');
+		//io.emit('disconnected message');
 	});
 });
 
@@ -41,6 +40,18 @@ io.on('connection', function(socket){
 		io.emit('chat message', msg);
 
 		//TODO, add support for multiple chat rooms
+	});
+
+	socket.on('join room', function(name){
+
+	});
+
+	socket.on('disconnect', function(){
+
+	});
+
+	socket.on('switch room', function(new_room){
+
 	});
 });
 
@@ -66,22 +77,6 @@ function update_chats(usr){
   usr.emit('update chats', chat_names);
 }
 
-/*
-
-MULTIPLE CHATS
-
-*/
-
- io.on('switch room', function(new_room){
- 	//TODO, this will handle switching chat rooms 
-
-});
-
-/*
-
-SUPPORT FOR NICKNAMES
-
-*/
 
 
 

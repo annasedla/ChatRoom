@@ -66,6 +66,7 @@
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  
   <script>
    $(function () {
 
@@ -80,17 +81,6 @@
     socket.on('chat message', function(msg){
       $('#messages').append($('<li>').text(msg));
     });
-
-    //connected messages
-    socket.on('connected message', function(){
-      $('#messages').append($('<li>').text("User connected."));
-    });
-
-    //disconnected messages
-    socket.on('disconnected message', function(){
-      $('#messages').append($('<li>').text("User disconnected."));
-    });
-
   });
    
 </script>
