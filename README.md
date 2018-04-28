@@ -2,7 +2,4 @@
 
 IN PROGRESS
 
-Simple chat room for socket.io practice.
-
-test for git
-another test for git
+Chat room using socket.io and Node.js.
