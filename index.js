@@ -4,7 +4,6 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 //all chat rooms
-//al users get initally directed to a lobby
 var chats = {'Default':{'users':[],'log':[]}, 'School':{'users':[],'log':[]}, 'Family':{'users':[],'log':[]}, 'Work':{'users':[],'log':[]}};
 
 app.get('/', function(req, res){
@@ -22,7 +21,7 @@ CONNECTION/ DISCONNECTION
 
 */
 io.on('connection', function(socket){
-	console.log('user connected');     //TODO, needs to be fixed because currently we are connecting and disconnecting too many times
+	console.log('user connected'); 
 	//io.emit('connected message');
 	socket.on('disconnect', function(){
 		console.log('user disconnected');
@@ -70,17 +69,35 @@ io.on('connection', function(socket){
 
 	});
 
+	//handler for disconnecting
 	socket.on('disconnect', function(){
 
 		chats[current_chat].users.splice(chats[current_chat].users.indexOf(ourSocket), 1);
-
 		push_to_chat(current_chat, {type: 'user event', to: current_chat, val: username + 'logged off.'})
 
 	});
 
-	socket.on('switch chat', function(new_room){
+	//handler for switching chats
+	socket.on('switch chat', function(new_chat){
+		var old_chat = current_chat;
 
+		//leave old chat
+		chats[old_chat].users.splice(chats[old_chat].users.indexOf(ourSocket), 1);
+		push_to_chat(old_chat, {type: 'user event', to: old_chat, val: username + 'switched chats.'})
 
+		//join new chat
+		chats[new_chat].users.push(ourSocket);
+		current_chat = new_chat;
+
+		//show all old messages
+		console.log("Send old messages.");
+		for (var i = 0; i < chats[current_chat].log.length; i++){
+			ourSocket.emit(chats[current_chat].log[i].type, chats[current_chat].log[i]);
+		}
+
+		console.log(username + " joined new chat");
+
+		push_to_chat(new_chat, {type: 'user event', to: new_chat, val: username + ' joined chat.'})
 
 	});
 });
