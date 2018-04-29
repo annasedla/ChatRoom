@@ -36,13 +36,37 @@ SENDING A MESSAGE
 
 */
 io.on('connection', function(socket){
+	var username = 'user';
+  	var current_chat = 'Default';
+  	var ourSocket = socket;
+
+  	update_chats(ourSocket);
+
+  	//handler for sending a message
 	socket.on('chat message', function(msg){
+		console.log(msg.name + " sent to " + msg.to)
+		//push_to_chat(msg.to, msg);
 		io.emit('chat message', msg);
 
-		//TODO, add support for multiple chat rooms
 	});
 
-	socket.on('join room', function(name){
+	//handler for joining a chat
+	socket.on('join chat', function(name){
+
+		current_chat = 'Default';
+		username  = name;
+
+		//display all old messages
+		console.log("Send old messages.");
+		for (var i = 0; i < chats[current_chat].log.length; i++){
+			ourSocket.emit(chats[current_chat].log[i].type, chats[current_chat].log[i]);
+		}
+
+		chats['Default'].users.push(ourSocket);
+
+		console.log(username + " joined main chat");
+
+		push_to_chat(current_chat, {type: 'user event', to: current_chat, val: username + 'logged on.'})
 
 	});
 
@@ -50,7 +74,7 @@ io.on('connection', function(socket){
 
 	});
 
-	socket.on('switch room', function(new_room){
+	socket.on('switch chat', function(new_room){
 
 	});
 });
