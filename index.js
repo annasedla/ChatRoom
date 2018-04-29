@@ -72,9 +72,15 @@ io.on('connection', function(socket){
 
 	socket.on('disconnect', function(){
 
+		chats[current_chat].users.splice(chats[current_chat].users.indexOf(ourSocket), 1);
+
+		push_to_chat(current_chat, {type: 'user event', to: current_chat, val: username + 'logged off.'})
+
 	});
 
 	socket.on('switch chat', function(new_room){
+
+
 
 	});
 });
