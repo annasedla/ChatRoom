@@ -123,9 +123,3 @@ function update_chats(usr){
   }
   usr.emit('update chats', chat_names);
 }
-
-
-
-
-
-

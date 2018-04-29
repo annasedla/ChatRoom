@@ -1,6 +1,5 @@
 <!doctype html>
 <html>
-
   <head>
     <link href="normalize.css" rel="stylesheet">
     <title>Socket.IO chat</title>
@@ -57,20 +56,30 @@
     </style>
   </head>
 
+  <script> var name = prompt("Please enter your name", "User1"); </script>
+
   <body>
     <ul id="messages"></ul>
     <form action="">
       <input id="m" autocomplete="off" /><button>Send</button>
+      <input type='button' class='chat' value='Default' onclick="switch_chat('Default')" />
+      <input type='button' class='chat' value='School' onclick="switch_chat('test_room_1')" />
+      <input type='button' class='chat' value='Family' onclick="switch_chat('test_room_1')" />
+      <input type='button' class='chat' value='Work' onclick="switch_chat('test_room_1')" />
     </form>
   </body>
+
+
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   
   <script>
+
    $(function () {
 
     var socket = io();
+
     $('form').submit(function(){
       socket.emit('chat message', $('#m').val());
       $('#m').val('');
