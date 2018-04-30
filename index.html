@@ -58,6 +58,13 @@
     color:black;
   }
 
+  .chat{
+    border:solid;
+    border-color:blue;
+    border-radius:8px;
+    font-size:20pt;
+  }
+
   .user_event {
     background:#111111;
     font-size:10pt;
@@ -74,7 +81,7 @@
   </style>
 </head>
 
-<script> var name = prompt("Please enter your name", "User1"); </script>
+<script> var name = prompt("Please enter your name", "AwesomeName"); </script>
 
 <body>
   <ul id="messages"></ul>
@@ -83,9 +90,7 @@
 
     <div id="buttons" style="position:relative;">
       <input type='button' class='chat' value='Default' onclick="switch_chat('Default')" />
-      <input type='button' class='chat' value='School' onclick="switch_chat('test_room_1')" />
-      <input type='button' class='chat' value='Family' onclick="switch_chat('test_room_1')" />
-      <input type='button' class='chat' value='Work' onclick="switch_chat('test_room_1')" />
+      <input type='button' class='chat' value='TestButtonTwo' onclick="switch_chat('test_chat_1')" />
     </div>
   </form>
 </body>
@@ -103,43 +108,42 @@ $(function () {
   var all_chats = [];
   var formatted_chats = '';
 
-  //socket.emit('join chat', name); //TODO
+  socket.emit('join chat', name);
   
-  /*function switch_chat(newChat){
+  function switch_chat(newChat){
     local_log = [];
     $('#messages').html('');
     socket.emit('switch chat', newChat);
     current_chat = newChat;
     update_chats();
 
-  }*/
+  }
 
     $('form').submit(function(){
-      socket.emit('chat message', $('#m').val());
-     // socket.emit('chat message', {name: name, to:current_chat, val: $('#m').val(), type:'chat message'} ); //TODO
+      //socket.emit('chat message', $('#m').val());
+      socket.emit('chat message', {name: name, to:current_chat, val: $('#m').val(), type:'chat message'} ); //TODO
       $('#m').val('');
       return false;
     });
 
     //chat messages
-    socket.on('chat message', function(msg){
-      $('#messages').append($('<li>').text(msg));
-    });
+    //socket.on('chat message', function(msg){
+      //$('#messages').append($('<li>').text(msg));
+    //});
 
-        /*
+        
     socket.on('chat message', function(msg){
       this_log.push({type:'chat message' , val:msg});
       var messages = $('#messages').html();
       var newMess = "<li>";
       if(this_log.length > 0 && this_log[this_log.length-1].type == 'chat message' && this_log[this_log.length-2].val.name == msg.name){ 
       } else {
-        newMess = newMess+"<div class='name'>"+msg.name+"</div>";
+        newMess = newMess + "<div class='name'>" + msg.name + "</div>";
       }
-      newMess = newMess+"<div class='mess'>"+msg.val+"</div></li>";
-      $('#messages').html(messages+newMess);
+      newMess = newMess+ "<div class='mess'>" +msg.val + "</div></li>";
+      $('#messages').html(messages + newMess);
       window.scrollTo(0,document.body.scrollHeight);
     });
-*/
 
     //user event
     socket.on('user event', function(msg){
@@ -149,7 +153,7 @@ $(function () {
       $('#messages').html(messages + newMess);
     });
 
-/*
+
     function update_chats(){
       //update chat buttons
       var displayed_chats = [];
@@ -160,11 +164,11 @@ $(function () {
       }
 
       for (var i = 0; i < displayed_chats.length; i++){
-        formatted_chats = formatted_chats + "<input type='button' class='chat' value='"+ rooms_to_display[i] +"' onclick=\"switch_chat('"+rooms_to_display[i]+"')\" />";
+        formatted_chats = formatted_chats + "<input type='chat' class='chat' value='" + chats_to_display[i] +"' onclick=\"switch_chat('" + chats_to_display[i]+"')\" />";
       }
 
       $('#buttons').html(formatted_chats);
-    }*/
+    }
   });
 
 </script>

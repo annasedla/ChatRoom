@@ -39,13 +39,13 @@ io.on('connection', function(socket){
   	var current_chat = 'Default';
   	var ourSocket = socket;
 
-  	//update_chats(ourSocket); //TODO
+  	update_chats(ourSocket); //TODO
 
   	//handler for sending a message
 	socket.on('chat message', function(msg){
-		//console.log(msg.name + " sent to " + msg.to)
-		//push_to_chat(msg.to, msg); //TODO
-		io.emit('chat message', msg);
+		console.log(msg.name + " sent to " + msg.to)
+		push_to_chat(msg.to, msg); //TODO
+		//io.emit('chat message', msg);
 
 	});
 
@@ -65,7 +65,7 @@ io.on('connection', function(socket){
 
 		console.log(username + " joined main chat");
 
-		push_to_chat(current_chat, {type: 'user event', to: current_chat, val: username + 'logged on.'})
+		push_to_chat(current_chat, {type: 'user event', to: current_chat, val: username + ' logged on.'})
 
 	});
 
@@ -73,7 +73,7 @@ io.on('connection', function(socket){
 	socket.on('disconnect', function(){
 
 		chats[current_chat].users.splice(chats[current_chat].users.indexOf(ourSocket), 1);
-		push_to_chat(current_chat, {type: 'user event', to: current_chat, val: username + 'logged off.'})
+		push_to_chat(current_chat, {type: 'user event', to: current_chat, val: username + ' logged off.'})
 
 	});
 
@@ -108,7 +108,7 @@ io.on('connection', function(socket){
 DIFFERENT CHAT FUNCTIONS
 
 */
-function push_to_chat(room, msg){
+function push_to_chat(chat, msg){
   chats[chat].log.push(msg);
   for(var i=0; i < chats[chat].users.length; i++){
     chats[chat].users[i].emit(msg.type, msg);
@@ -117,6 +117,7 @@ function push_to_chat(room, msg){
 
 //updates a list of chats to display in the front end buttons
 function update_chats(usr){
+	console.log("**update chats function has been called**");	
   var chat_names = [];
   for(var chat in chats){
     chat_names.push(chat);
