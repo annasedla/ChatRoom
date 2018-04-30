@@ -1,4 +1,4 @@
-{
+  {
   "name": "chatroom",
   "version": "0.0.1",
   "description": "not my first socket.io app",
@@ -20,4 +20,7 @@
     "url": "https://github.com/sedlackova-anna/ChatRoom/issues"
   },
   "homepage": "https://github.com/sedlackova-anna/ChatRoom#readme"
-}
+  },
+  "scripts": {
+  "start": "node index.js"
+  }
