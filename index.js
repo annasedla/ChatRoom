@@ -11,9 +11,12 @@ app.get('/', function(req, res){
 });
 
 //port to listen on
-http.listen(3000, function(){
-	console.log('listening on *:3000');
-});
+//http.listen(3000, function(){
+//	console.log('listening on *:3000');
+//});
+
+var port = process.env.PORT || 3000;
+http.listen(port);
 
 /*
 
