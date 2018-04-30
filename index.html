@@ -153,6 +153,12 @@ $(function () {
       $('#messages').html(messages + newMess);
     });
 
+    //update chats
+    socket.on('update chats', function(chats){
+      all_chats = chats;
+      update_chats();
+    });
+
 
     function update_chats(){
       //update chat buttons
@@ -164,7 +170,8 @@ $(function () {
       }
 
       for (var i = 0; i < displayed_chats.length; i++){
-        formatted_chats = formatted_chats + "<input type='chat' class='chat' value='" + chats_to_display[i] +"' onclick=\"switch_chat('" + chats_to_display[i]+"')\" />";
+        formatted_chats = formatted_chats + "<input type ='button' class ='chat' value = '" + displayed_chats[i] +"' onclick=\"switch_chat('" + displayed_chats[i]+"')\" />";
+        //$("#i").oclick()
       }
 
       $('#buttons').html(formatted_chats);
