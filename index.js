@@ -39,12 +39,12 @@ io.on('connection', function(socket){
   	var current_chat = 'Default';
   	var ourSocket = socket;
 
-  	update_chats(ourSocket);
+  	//update_chats(ourSocket); //TODO
 
   	//handler for sending a message
 	socket.on('chat message', function(msg){
-		console.log(msg.name + " sent to " + msg.to)
-		//push_to_chat(msg.to, msg);
+		//console.log(msg.name + " sent to " + msg.to)
+		//push_to_chat(msg.to, msg); //TODO
 		io.emit('chat message', msg);
 
 	});
