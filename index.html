@@ -59,35 +59,50 @@
   .messages { 
     list-style-type: none; 
     margin: 0; 
-    padding: 0; 
+    padding-right: 10px;
+    padding-top: 3px;
+    padding-bottom: 5px; 
   }
 
-  .name{
-    background:#F0F0F0;
+  .name{                    /*user writes something*/
+    background:grey;;
     font-size:10pt;
-    color:grey;
+    color: white;
+      border-radius: 15px 15px 0px 0px;
+      padding-left: 10px;
+      padding-bottom: 3px;
+      padding-top: 3px;
   }
 
   .mess {
-    background:#FFFFFF;
+    background:background: rgba(204, 204, 204, 0.5);
     font-size:16pt;
     color:black;
+    padding-left: 10px;
+    
   }
 
   .chat{                         /*for chat buttons*/
     border:solid;
     background: rgb(0, 168, 107);
     border-radius:25px;
-    font-size:15pt;
+    line-height: 20px;
+    font-size:14pt;
     width: 20%;
-    height: 40px;
+    height: 45px;
     color: white;
     padding-bottom: 20px;
-    
+      -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+      text-align: center;
+  }
+      
+  .chat:hover{
+      background-color: rgb(107,231,186);
   }
 
   .user_event {
-    background: rgb(107,231,186);
+    background: rgb(107,231,186); /* pale green */
     font-size:10pt;
     color: grey;
     text-align: center;
@@ -104,17 +119,21 @@
   }
 
   #messages li:nth-child(odd) { 
-    background: #eee; 
+    background: rgb(223, 252, 241); 
   }
       
 
   .button1:hover {
-    background-color: rgb(0, 168, 107); /* Green */
+    background-color: rgb(0, 168, 107); /* dark green */
   }
       
   .button-container {
       margin-top: 7px;
   }
+      
+      .centering {
+          margin: 0 auto;
+      }
     
   </style>
 </head>
@@ -181,7 +200,7 @@
     socket.on('user event', function(msg){
       this_log.push({type:'user event' , val:msg});
       var messages = $('#messages').html();
-      var newMess = "<li><div class='user_event'>" + msg.val + "</div></li>";
+      var newMess = "<li><div class='centering'><div class='user_event'>" + msg.val + "</div></div></li>";
       $('#messages').html(messages + newMess);
     });
 
