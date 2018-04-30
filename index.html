@@ -100,13 +100,13 @@
 
 <script>
 
-$(function () {
+//$(function () {
 
   var socket = io();
   var this_log = [];
   var current_chat = 'Default';
   var all_chats = [];
-  var formatted_chats = '';
+
 
   socket.emit('join chat', name);
   
@@ -163,6 +163,8 @@ $(function () {
     function update_chats(){
       //update chat buttons
       var displayed_chats = [];
+      var formatted_chats = '';
+
       for (var i = 0; i < all_chats.length; i++){
         if (all_chats[i] != current_chat){
           displayed_chats.push(all_chats[i]);
@@ -170,12 +172,12 @@ $(function () {
       }
 
       for (var i = 0; i < displayed_chats.length; i++){
-        formatted_chats = formatted_chats + "<input type ='button' class ='chat' value = '" + displayed_chats[i] +"' onclick=\"switch_chat('" + displayed_chats[i]+"')\" />";
+        formatted_chats = formatted_chats + "<input type ='button' class ='chat' value = '" + displayed_chats[i] +"' onclick=\"switch_chat('" + displayed_chats[i] + "')\" />";
         //$("#i").oclick()
       }
 
       $('#buttons').html(formatted_chats);
     }
-  });
+  //});
 
 </script>

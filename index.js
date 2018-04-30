@@ -83,7 +83,7 @@ io.on('connection', function(socket){
 
 		//leave old chat
 		chats[old_chat].users.splice(chats[old_chat].users.indexOf(ourSocket), 1);
-		push_to_chat(old_chat, {type: 'user event', to: old_chat, val: username + 'switched chats.'})
+		push_to_chat(old_chat, {type: 'user event', to: old_chat, val: username + ' switched chats.'})
 
 		//join new chat
 		chats[new_chat].users.push(ourSocket);
