@@ -46,6 +46,24 @@
     padding: 0; 
   }
 
+  #name{
+    background:#F0F0F0;
+    font-size:10pt;
+    color:grey;
+  }
+
+  #mess {
+    background:#FFFFFF;
+    font-size:16pt;
+    color:black;
+  }
+
+  #user_event {
+    background:#111111;
+    font-size:10pt;
+    color:red;
+  }
+
   #messages li { 
     padding: 5px 10px; 
   }
@@ -61,11 +79,14 @@
 <body>
   <ul id="messages"></ul>
   <form action="">
-    <input id="buttons" autocomplete="off" /><button>Send</button>
-    <input type='button' class='chat' value='Default' onclick="switch_chat('Default')" />
-    <input type='button' class='chat' value='School' onclick="switch_chat('test_room_1')" />
-    <input type='button' class='chat' value='Family' onclick="switch_chat('test_room_1')" />
-    <input type='button' class='chat' value='Work' onclick="switch_chat('test_room_1')" />
+    <input id="m" autocomplete="off" /><button>Send</button>
+
+    <div id="buttons" style="position:relative;">
+      <input type='button' class='chat' value='Default' onclick="switch_chat('Default')" />
+      <input type='button' class='chat' value='School' onclick="switch_chat('test_room_1')" />
+      <input type='button' class='chat' value='Family' onclick="switch_chat('test_room_1')" />
+      <input type='button' class='chat' value='Work' onclick="switch_chat('test_room_1')" />
+    </div>
   </form>
 </body>
 
@@ -82,17 +103,50 @@ $(function () {
   var all_chats = [];
   var formatted_chats = '';
 
-    //socket.emit('join chat', name); //TODO
+  //socket.emit('join chat', name); //TODO
+  
+  /*function switch_chat(newChat){
+    local_log = [];
+    $('#messages').html('');
+    socket.emit('switch chat', newChat);
+    current_chat = newChat;
+    update_chats();
+
+  }*/
 
     $('form').submit(function(){
-      socket.emit('chat message', $('#buttons').val());
-      $('#buttons').val('');
+      socket.emit('chat message', $('#m').val());
+     // socket.emit('chat message', {name: name, to:current_chat, val: $('#m').val(), type:'chat message'} ); //TODO
+      $('#m').val('');
       return false;
     });
 
     //chat messages
     socket.on('chat message', function(msg){
       $('#messages').append($('<li>').text(msg));
+    });
+
+        /*
+    socket.on('chat message', function(msg){
+      this_log.push({type:'chat message' , val:msg});
+      var messages = $('#messages').html();
+      var newMess = "<li>";
+      if(this_log.length > 0 && this_log[this_log.length-1].type == 'chat message' && this_log[this_log.length-2].val.name == msg.name){ 
+      } else {
+        newMess = newMess+"<div class='name'>"+msg.name+"</div>";
+      }
+      newMess = newMess+"<div class='mess'>"+msg.val+"</div></li>";
+      $('#messages').html(messages+newMess);
+      window.scrollTo(0,document.body.scrollHeight);
+    });
+*/
+
+    //user event
+    socket.on('user event', function(msg){
+      this_log.push({type:'user event' , val:msg});
+      var messages = $('#messages').html();
+      var newMess = "<li><div class='user_event'>" + msg.val + "</div></li>";
+      $('#messages').html(messages + newMess);
     });
 
 /*
