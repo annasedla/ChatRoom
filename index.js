@@ -10,11 +10,6 @@ app.get('/', function(req, res){
 	res.sendFile(__dirname + '/index.html');
 });
 
-//port to listen on
-//http.listen(3000, function(){
-//	console.log('listening on *:3000');
-//});
-
 var port = process.env.PORT || 3000;
 http.listen(port);
 
@@ -25,10 +20,8 @@ CONNECTION/ DISCONNECTION
 */
 io.on('connection', function(socket){
 	console.log('user connected'); 
-	//io.emit('connected message');
 	socket.on('disconnect', function(){
 		console.log('user disconnected');
-		//io.emit('disconnected message');
 	});
 });
 
@@ -42,13 +35,12 @@ io.on('connection', function(socket){
   	var current_chat = 'Default';
   	var ourSocket = socket;
 
-  	update_chats(ourSocket); //TODO
+  	update_chats(ourSocket);
 
   	//handler for sending a message
 	socket.on('chat message', function(msg){
 		console.log(msg.name + " sent to " + msg.to)
-		push_to_chat(msg.to, msg); //TODO
-		//io.emit('chat message', msg);
+		push_to_chat(msg.to, msg);
 
 	});
 
@@ -111,6 +103,8 @@ io.on('connection', function(socket){
 DIFFERENT CHAT FUNCTIONS
 
 */
+
+//handles sending messages
 function push_to_chat(chat, msg){
   chats[chat].log.push(msg);
   for(var i=0; i < chats[chat].users.length; i++){
@@ -119,8 +113,7 @@ function push_to_chat(chat, msg){
 }
 
 //updates a list of chats to display in the front end buttons
-function update_chats(usr){
-	console.log("**update chats function has been called**");	
+function update_chats(usr){	
   var chat_names = [];
   for(var chat in chats){
     chat_names.push(chat);
