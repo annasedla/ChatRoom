@@ -138,9 +138,6 @@
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 
 <script>
-
-//$(function () {
-
   var socket = io();
   var this_log = [];
   var current_chat = 'Default';
@@ -159,17 +156,10 @@
   }
 
     $('form').submit(function(){
-      //socket.emit('chat message', $('#m').val());
       socket.emit('chat message', {name: name, to:current_chat, val: $('#m').val(), type:'chat message'} ); //TODO
       $('#m').val('');
       return false;
     });
-
-    //chat messages
-    //socket.on('chat message', function(msg){
-      //$('#messages').append($('<li>').text(msg));
-    //});
-
         
     socket.on('chat message', function(msg){
       this_log.push({type:'chat message' , val:msg});
@@ -200,7 +190,6 @@
 
 
     function update_chats(){
-      //update chat buttons
       var displayed_chats = [];
       var formatted_chats = '';
 
@@ -212,11 +201,9 @@
 
       for (var i = 0; i < displayed_chats.length; i++){
         formatted_chats = formatted_chats + "<input type ='button' class ='chat' value = '" + displayed_chats[i] +"' onclick=\"switch_chat('" + displayed_chats[i] + "')\" />";
-        //$("#i").oclick()
       }
 
       $('#buttons').html(formatted_chats);
     }
-  //});
 
 </script>
